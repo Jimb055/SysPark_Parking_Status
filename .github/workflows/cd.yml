@@ -26,14 +26,14 @@ jobs:
         run: |
           docker push ${{ secrets.DOCKER_USER }}/parking-status:latest
 
-      - name: SSH into EC2 and update container
+      - name: SSH into EC2 and redeploy with docker-compose
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            docker pull ${{ secrets.DOCKER_USER }}/parking-status:latest
-            docker stop parking-status || true
-            docker rm parking-status || true
-            docker run -d --name parking-status -p 8080:8080 ${{ secrets.DOCKER_USER }}/parking-status:latest
+            cd ~/parking-status
+            docker-compose down -v
+            docker-compose pull
+            docker-compose up --build -d

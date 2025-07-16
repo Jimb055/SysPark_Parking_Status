@@ -35,3 +35,8 @@ func ConnectPostgres() {
 
 	log.Println("✅ Connected to PostgreSQL database successfully")
 }
+
+// GetDB returns the database connection
+func GetDB() *sql.DB {
+	return DB
+}
