@@ -1,24 +1,31 @@
-# Use a minimal Go base image
-FROM golang:1.23-alpine
+# Etapa de compilación
+FROM golang:1.23-alpine AS builder
 
-# Set the working directory
+# Habilita bash para debug y más utilidades (opcional)
+RUN apk add --no-cache bash
+
 WORKDIR /app
 
-# Copy go mod and sum files first (for better caching)
-COPY go.mod ./
-COPY go.sum ./
-
-# Download dependencies (this step is cached if mod files didn't change)
+# Copiar primero los archivos de dependencias
+COPY go.mod go.sum ./
 RUN go mod download
 
-# Copy the rest of the source code
+# Copiar el resto del código
 COPY . .
 
-# Build the application
-RUN go build -o parking-status ./cmd/main.go
+# Forzar compilación completa del binario
+RUN go build -a -installsuffix cgo -o parking-status ./cmd/main.go
 
-# Expose the port used by the service
+# Etapa final con imagen mínima
+FROM alpine:latest
+
+WORKDIR /app
+
+# Copiar solo el binario desde la etapa anterior
+COPY --from=builder /app/parking-status .
+
+# Exponer el puerto usado por el servicio
 EXPOSE 8080
 
-# Run the built binary
+# Ejecutar el binario
 CMD ["./parking-status"]

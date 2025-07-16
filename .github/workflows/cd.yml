@@ -35,5 +35,6 @@ jobs:
           script: |
             cd ~/parking-status
             docker-compose down -v
+            docker image prune -f
             docker-compose pull
             docker-compose up --build -d
