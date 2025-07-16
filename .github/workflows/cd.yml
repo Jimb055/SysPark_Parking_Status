@@ -1,4 +1,4 @@
-name: 🚀 CD - Deploy ParkingStatus
+name: CD - Deploy ParkingStatus
 
 on:
   push:

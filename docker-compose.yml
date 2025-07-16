@@ -4,6 +4,30 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: parking-status
     ports:
       - "8080:8080"
-    container_name: parking-status
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=parking
+      - DB_PASSWORD=secret
+      - DB_NAME=parkingdb
+
+  db:
+    image: postgres:15
+    container_name: parking-db
+    restart: always
+    environment:
+      POSTGRES_USER: parking
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: parkingdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
