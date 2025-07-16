@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/your-username/parking-status/internal/service"
+	"github.com/Jimb055/parking-status/internal/service"
 )
 
 func GetAvailableParkings(w http.ResponseWriter, r *http.Request) {

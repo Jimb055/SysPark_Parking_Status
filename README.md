@@ -3,7 +3,7 @@
 This service provides available parking slot information through the endpoint:
 
 ```csharp
-GET /api/parking/disponibles
+GET /api/parking/availables
 ```
 
 

@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/your-username/parking-status/internal/handler"
+	"github.com/Jimb055/parking-status/internal/handler"
 )
 
 func main() {

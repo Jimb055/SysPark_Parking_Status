@@ -1,12 +1,12 @@
 # Use a minimal Go base image
-FROM golang:1.22-alpine
+FROM golang:1.23-alpine
 
 # Set the working directory
 WORKDIR /app
 
 # Copy go mod and sum files first (for better caching)
 COPY go.mod ./
-COPY go.sum ./
+#COPY go.sum ./
 
 # Download dependencies (this step is cached if mod files didn't change)
 RUN go mod download
