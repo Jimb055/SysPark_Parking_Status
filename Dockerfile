@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Copy go mod and sum files first (for better caching)
 COPY go.mod ./
-#COPY go.sum ./
+COPY go.sum ./
 
 # Download dependencies (this step is cached if mod files didn't change)
 RUN go mod download
