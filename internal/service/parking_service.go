@@ -15,6 +15,8 @@ type ParkingSlot struct {
 func FetchAvailableParkings() []ParkingSlot {
 	db := database.GetDB()
 
+	log.Println("➡️ Consultando base de datos real...")
+
 	rows, err := db.Query("SELECT id, ubicacion, disponible FROM espacios")
 	if err != nil {
 		log.Println("❌ Error al consultar la base de datos:", err)
